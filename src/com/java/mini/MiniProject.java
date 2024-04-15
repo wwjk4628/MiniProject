@@ -1,20 +1,15 @@
 package com.java.mini;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
-import java.util.StringTokenizer;
 
 public class MiniProject {
 	private static String rootPath = System.getProperty("user.dir") + "\\file\\";
@@ -27,7 +22,8 @@ public class MiniProject {
 		List<Mini> rlist = new ArrayList<Mini>();
 		File file = new File(filename);
 		String[] mySplit;
-		try {
+		try 
+			{
 			Scanner sc = new Scanner(file);
 			Mini hum;
 			String line;
@@ -49,7 +45,7 @@ public class MiniProject {
 			System.err.println("파일을 찾을 수 없습니다.");
 		} catch (ConcurrentModificationException e) {
 			e.printStackTrace();
-		}
+		} 
 
 	}
 
@@ -125,6 +121,13 @@ public class MiniProject {
 
 
 	public static void aadd(List<Mini> list) {
+//		try
+//		(
+//				// 스트림 열고
+//				Writer writer = new FileWriter(filename);)
+//		{
+			
+		
 		Scanner sc = new Scanner(System.in);
 		System.out.println("<2.등록>");
 		System.out.print("이름: ");
@@ -135,7 +138,14 @@ public class MiniProject {
 		String home = sc.next();
 		Mini line = new Mini(name, phone, home);
 		list.add(line);
-
+		System.out.println(list.toString());
+//		writer.write(line.toString());
+//		writer.write(name + "," + phone + "," + home);
+//		
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//		}
+//		
 	}
 
 	public static void rremove(List<Mini> list) {

@@ -45,7 +45,7 @@ public class Mini {
 
 	@Override
 	public String toString() {
-		return name + phone + hp;
+		return name + "," +  phone + "," + hp;
 	}
 
 }

@@ -1,29 +1,29 @@
-package com.java.mini;
+package realproject;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
+import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
-public class MiniProject {
+import com.java.minixxxxxxxxx.Mini;
+
+public class MiniApp {
 	private static String rootPath = System.getProperty("user.dir") + "\\file\\";
-	private static String filename = rootPath + "PhoneDB.txt";
-	private static String target = rootPath + "PhoneDB-filtered.txt";
-	private static String copy = rootPath + "PhoneDB-copy.txt";
+	private static String fileName = rootPath + "PhoneDB.txt";
 
 	public static void main(String[] args) {
-
 		List<Mini> rlist = new ArrayList<Mini>();
-		File file = new File(filename);
+		File file = new File(fileName);
 		String[] mySplit;
-		try 
-			{
+		try {
 			Scanner sc = new Scanner(file);
 			Mini hum;
 			String line;
@@ -45,7 +45,7 @@ public class MiniProject {
 			System.err.println("파일을 찾을 수 없습니다.");
 		} catch (ConcurrentModificationException e) {
 			e.printStackTrace();
-		} 
+		}
 
 	}
 
@@ -63,10 +63,7 @@ public class MiniProject {
 		while (!i.equals("5")) {
 			switch (i) {
 			case "1":
-				Iterator<Mini> it = list.iterator();
-				while (it.hasNext()) {
-					it.next().draw();
-				}
+				View(list);
 				System.out.println();
 				System.out.println("1.리스트 2.등록 3.삭제 4.검색 5.종료");
 				System.out.print(">메뉴번호: ");
@@ -74,14 +71,14 @@ public class MiniProject {
 				System.out.println();
 				break;
 			case "2":
-				aadd(list);
+				add(list);
 				System.out.println("1.리스트 2.등록 3.삭제 4.검색 5.종료");
 				System.out.print(">메뉴번호: ");
 				i = sc.next();
 				System.out.println();
 				break;
 			case "3":
-				rremove(list);
+				remove(list);
 				System.out.println("1.리스트 2.등록 3.삭제 4.검색 5.종료");
 				System.out.print(">메뉴번호: ");
 				i = sc.next();
@@ -92,13 +89,6 @@ public class MiniProject {
 				System.out.println("<4.필터>");
 				System.out.print("이름: ");
 				String name = sc.next();
-				it = list.iterator();
-				while (it.hasNext()) {
-				
-				if (list.contains(name)) {
-					
-				}
-				}
 				System.out.println("1.리스트 2.등록 3.삭제 4.검색 5.종료");
 				System.out.print(">메뉴번호: ");
 				i = sc.next();
@@ -119,43 +109,79 @@ public class MiniProject {
 
 	}
 
+	
+	public static void View(List<Mini> list) {
+		File file = new File(fileName);
+		String[] mySplit;
+		int i = 1;
 
-	public static void aadd(List<Mini> list) {
-//		try
-//		(
-//				// 스트림 열고
-//				Writer writer = new FileWriter(filename);)
-//		{
-			
-		
-		Scanner sc = new Scanner(System.in);
-		System.out.println("<2.등록>");
-		System.out.print("이름: ");
-		String name = sc.next();
-		System.out.print("휴대전화: ");
-		String phone = sc.next();
-		System.out.print("회사전화: ");
-		String home = sc.next();
-		Mini line = new Mini(name, phone, home);
-		list.add(line);
-		System.out.println(list.toString());
-//		writer.write(line.toString());
-//		writer.write(name + "," + phone + "," + home);
-//		
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-//		
+		try {
+			Scanner sc = new Scanner(file);
+			String hum;
+			while (sc.hasNext()) {
+				hum = sc.next();
+				mySplit = hum.split(",");
+				Mini line = new Mini(mySplit[0], mySplit[1], mySplit[2]);
+				System.out.print(i++);
+				line.draw();
+				
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
-	public static void rremove(List<Mini> list) {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("<3.삭제>");
-		int line = sc.nextInt();
-		list.remove(line - 1);
+	public static void add(List<Mini> list) {
+
+		try (
+
+				Writer fw = new FileWriter(fileName);
+				BufferedWriter bw = new BufferedWriter(fw);) {
+			Scanner scanner = new Scanner(System.in);
+			System.out.println("<2.등록>");
+			System.out.print("이름: ");
+			String name = scanner.next();
+			System.out.print("휴대전화: ");
+			String phone = scanner.next();
+			System.out.print("회사전화: ");
+			String home = scanner.next();
+			Mini line = new Mini(name, phone, home);
+			list.add(line);
+			for (Mini n : list) {
+				bw.write(n.toString());
+				bw.newLine();
+			}
+		} catch (Exception e) {
+
+		}
+	}
+
+	public static void remove(List<Mini> list) {
+
+		try (
+
+				Writer fw = new FileWriter(fileName);
+				BufferedWriter bw = new BufferedWriter(fw);) {
+			Scanner sc = new Scanner(System.in);
+			System.out.println("<3.삭제>");
+			int line = sc.nextInt();
+			list.remove(line);
+			for (Mini n : list) {
+				bw.write(n.toString());
+				bw.newLine();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	public static void filter(List<Mini> list) {
+		for (Mini n : list) {
+			if (list.contains("길동")) {
+				System.out.println(n.toString());
+			}
+			System.out.println(n.toString());
+		}
 
 	}
 }

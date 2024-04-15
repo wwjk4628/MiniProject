@@ -1,21 +1,17 @@
-package com.java.mini.copy;
+package com.java.minixxxxxxxxx;
 
 public class Mini {
 	private String name;
 	private String phone;
 	private String hp;
 
+	public Mini() {
+
+	}
+
 	public Mini(String name, String phone, String hp) {
 		this.name = name;
 		this.phone = phone;
-		this.hp = hp;
-	}
-
-	public String getHp() {
-		return hp;
-	}
-
-	public void setHp(String hp) {
 		this.hp = hp;
 	}
 
@@ -35,10 +31,21 @@ public class Mini {
 		this.phone = phone;
 	}
 
+	public String getHp() {
+		return hp;
+	}
+
+	public void setHp(String hp) {
+		this.hp = hp;
+	}
+
+	public void draw() {
+		System.out.printf("%s %s %s%n",  name, phone, hp);
+	}
+
 	@Override
 	public String toString() {
-		int a = 1;
-		return a++ + " " + name + " " + phone + " " + hp;
-
+		return name + "," +  phone + "," + hp;
 	}
+
 }

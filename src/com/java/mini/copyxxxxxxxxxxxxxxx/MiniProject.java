@@ -1,4 +1,4 @@
-package com.java.mini.copy;
+package com.java.mini.copyxxxxxxxxxxxxxxx;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

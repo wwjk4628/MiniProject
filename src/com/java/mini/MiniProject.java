@@ -2,16 +2,17 @@ package com.java.mini;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -22,7 +23,37 @@ public class MiniProject {
 	private static String copy = rootPath + "PhoneDB-copy.txt";
 
 	public static void main(String[] args) {
-		
+
+		List<Mini> rlist = new ArrayList<Mini>();
+		File file = new File(filename);
+		String[] mySplit;
+		try {
+			Scanner sc = new Scanner(file);
+			Mini hum;
+			String line;
+			String name;
+			String phone;
+			String hp;
+			while (sc.hasNext()) {
+				line = sc.next();
+				mySplit = line.split(",");
+				name = mySplit[0];
+				phone = mySplit[1];
+				hp = mySplit[2];
+				hum = new Mini(name, phone, hp);
+				rlist.add(hum);
+			}
+			console(rlist);
+
+		} catch (FileNotFoundException e) {
+			System.err.println("파일을 찾을 수 없습니다.");
+		} catch (ConcurrentModificationException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void console(List<Mini> list) {
 		Scanner sc = new Scanner(System.in);
 
 		System.out.println("*********************************");
@@ -36,7 +67,10 @@ public class MiniProject {
 		while (!i.equals("5")) {
 			switch (i) {
 			case "1":
-				token();
+				Iterator<Mini> it = list.iterator();
+				while (it.hasNext()) {
+					it.next().draw();
+				}
 				System.out.println();
 				System.out.println("1.리스트 2.등록 3.삭제 4.검색 5.종료");
 				System.out.print(">메뉴번호: ");
@@ -44,21 +78,31 @@ public class MiniProject {
 				System.out.println();
 				break;
 			case "2":
-				add();
+				aadd(list);
 				System.out.println("1.리스트 2.등록 3.삭제 4.검색 5.종료");
 				System.out.print(">메뉴번호: ");
 				i = sc.next();
 				System.out.println();
 				break;
 			case "3":
-
+				rremove(list);
 				System.out.println("1.리스트 2.등록 3.삭제 4.검색 5.종료");
 				System.out.print(">메뉴번호: ");
 				i = sc.next();
 				System.out.println();
 				break;
 			case "4":
-				filter();
+
+				System.out.println("<4.필터>");
+				System.out.print("이름: ");
+				String name = sc.next();
+				it = list.iterator();
+				while (it.hasNext()) {
+				
+				if (list.contains(name)) {
+					
+				}
+				}
 				System.out.println("1.리스트 2.등록 3.삭제 4.검색 5.종료");
 				System.out.print(">메뉴번호: ");
 				i = sc.next();
@@ -79,38 +123,8 @@ public class MiniProject {
 
 	}
 
-	public static void token() {
-		try (
-				// 스트림 열기
-				Reader fr = new FileReader(filename); // filename을 읽어들임
-				BufferedReader br = new BufferedReader(fr); // fr
-		) {
-			String line; // 한 줄을 읽어오기 위한 변수
-			int i = 1;
-			while ((line = br.readLine()) != null) {
-				// 토크나이징
-				StringTokenizer st = new StringTokenizer(line, ",");
-				System.out.print(i++);
-				while (st.hasMoreTokens()) { // 뒤에 토큰이 더 있는가?
-					String token = st.nextToken();
-					System.out.printf(" %s", token);
-				}
-				System.out.println();
-			}
 
-			br.close(); // 보조 스트림을 닫으면 주스트림도 닫힌다.
-
-		} catch (FileNotFoundException e) {
-			System.err.println("파일을 찾을 수 없습니다.");
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	public static void add() {
+	public static void aadd(List<Mini> list) {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("<2.등록>");
 		System.out.print("이름: ");
@@ -119,92 +133,19 @@ public class MiniProject {
 		String phone = sc.next();
 		System.out.print("회사전화: ");
 		String home = sc.next();
-		String line = "";
-		try ( // 주스트림 연결
-				Reader fr = new FileReader(filename);
-				Writer fw = new FileWriter(copy);
-				// 보조 스트림 연결
-				BufferedReader br = new BufferedReader(fr);
-				BufferedWriter bw = new BufferedWriter(fw);
-		// 라인단위 문자열 작업 -> Buffer 기능 사용
-		) {
-			while ((line = br.readLine()) != null) {
-				line = br.readLine();
-				bw.write(line);
-				bw.newLine();
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		Mini line = new Mini(name, phone, home);
+		list.add(line);
 
 	}
 
-	public static void remove() {
-
-	}
-
-	public static void filter() {
+	public static void rremove(List<Mini> list) {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("<2.등록>");
-		System.out.print("이름: ");
-		String name = sc.next();
-		try ( // 주스트림 연결
-				Reader fr = new FileReader(filename);
-				Writer fw = new FileWriter(target);
-				// 보조 스트림 연결
-				BufferedReader br = new BufferedReader(fr);
-				BufferedWriter bw = new BufferedWriter(fw);
-		// 라인단위 문자열 작업 -> Buffer 기능 사용
-		) {
-			// 한줄 단위로 읽고 쓰는데 특화
-			String line = "";
+		System.out.println("<3.삭제>");
+		int line = sc.nextInt();
+		list.remove(line - 1);
+	}
 
-			while ((line = br.readLine()) != null) {
-//				System.out.println(line);
-				// leaf, leaves가 들어있는 라인만 필터링
-				if (line.toLowerCase().contains(name)) {
-//					System.out.println(line);
-					// 필터링된 라인만 별도 저장
-					bw.write(line);
-					bw.newLine();
-				}
-
-			}
-
-		} catch (FileNotFoundException e) {
-			System.err.println("파일을 찾을 수 없습니다.");
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		try (
-				// 스트림 열기
-				Reader fr = new FileReader(target); // filename을 읽어들임
-				BufferedReader br = new BufferedReader(fr); // fr
-		) {
-			String line; // 한 줄을 읽어오기 위한 변수
-			int i = 1;
-			while ((line = br.readLine()) != null) {
-				// 토크나이징
-				StringTokenizer st = new StringTokenizer(line, ",");
-				System.out.print(i++);
-				while (st.hasMoreTokens()) { // 뒤에 토큰이 더 있는가?
-					String token = st.nextToken();
-					System.out.printf(" %s", token);
-				}
-				System.out.println();
-			}
-
-			br.close(); // 보조 스트림을 닫으면 주스트림도 닫힌다.
-
-		} catch (FileNotFoundException e) {
-			System.err.println("파일을 찾을 수 없습니다.");
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public static void filter(List<Mini> list) {
 
 	}
 }

@@ -88,7 +88,6 @@ public class MiniApp {
 				break;
 			case "4":
 
-				
 				filter(list);
 				System.out.println("1.리스트 2.등록 3.삭제 4.검색 5.종료");
 				System.out.print(">메뉴번호: ");
@@ -110,7 +109,6 @@ public class MiniApp {
 
 	}
 
-	
 	public static void View(List<Mini> list) {
 		File file = new File(fileName);
 		String[] mySplit;
@@ -125,7 +123,7 @@ public class MiniApp {
 				Mini line = new Mini(mySplit[0], mySplit[1], mySplit[2]);
 				System.out.print(i++ + " ");
 				line.draw();
-				
+
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -163,21 +161,25 @@ public class MiniApp {
 
 	public static void remove(List<Mini> list) {
 
-		try (
-
-				Writer fw = new FileWriter(fileName);
-				BufferedWriter bw = new BufferedWriter(fw);) {
-			Scanner sc = new Scanner(System.in);
-			System.out.println("<3.삭제>");
-			int line = sc.nextInt();
-			list.remove(line-1);
+		Scanner sc = new Scanner(System.in);
+		System.out.println("<3.삭제>");
+		int line = sc.nextInt();
+		if (line > list.size() || line <= 0) {
+			return;
+		}
+//		if (line <= list.size() && line > 0) {
+		try (Writer fw = new FileWriter(fileName); BufferedWriter bw = new BufferedWriter(fw);) {
+			list.remove(line - 1);
 			for (Mini n : list) {
 				bw.write(n.toString());
 				bw.newLine();
 			}
+
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+//		}
+
 	}
 
 	public static void filter(List<Mini> list) {

@@ -1,4 +1,4 @@
-package realproject;
+package com.java.realproject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,6 +10,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -104,7 +105,7 @@ public class MiniApp {
 		}
 		sc.close();
 		System.out.println("*********************************");
-		System.out.println("*\t    감사합니다    \t        *");
+		System.out.println("*           감사합니다             *");
 		System.out.println("*********************************");
 
 	}
@@ -122,7 +123,7 @@ public class MiniApp {
 				hum = sc.next();
 				mySplit = hum.split(",");
 				Mini line = new Mini(mySplit[0], mySplit[1], mySplit[2]);
-				System.out.print(i++);
+				System.out.print(i++ + " ");
 				line.draw();
 				
 			}
@@ -165,7 +166,7 @@ public class MiniApp {
 			Scanner sc = new Scanner(System.in);
 			System.out.println("<3.삭제>");
 			int line = sc.nextInt();
-			list.remove(line);
+			list.remove(line-1);
 			for (Mini n : list) {
 				bw.write(n.toString());
 				bw.newLine();

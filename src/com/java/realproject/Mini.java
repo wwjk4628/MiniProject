@@ -1,4 +1,4 @@
-package realproject;
+package com.java.realproject;
 
 public class Mini {
 	private String name;
@@ -40,7 +40,7 @@ public class Mini {
 	}
 
 	public void draw() {
-		System.out.printf("%s %s %s", name, ph, hp);
+		System.out.printf(" %s %s %s", name, ph, hp);
 	}
 
 	@Override

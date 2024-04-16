@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.attribute.FileTime;
@@ -25,13 +26,13 @@ public class MiniApp {
 		List<Mini> rlist = new ArrayList<Mini>();
 		File file = new File(fileName);
 		String[] mySplit;
+		Mini hum;
+		String line;
+		String name;
+		String phone;
+		String hp;
 		try {
 			Scanner sc = new Scanner(file);
-			Mini hum;
-			String line;
-			String name;
-			String phone;
-			String hp;
 			while (sc.hasNext()) {
 				line = sc.next();
 				mySplit = line.split(",");
@@ -154,7 +155,7 @@ public class MiniApp {
 				bw.write(n.toString());
 				bw.newLine();
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 
 		}
 	}
@@ -175,8 +176,8 @@ public class MiniApp {
 				bw.newLine();
 			}
 
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 //		}
 

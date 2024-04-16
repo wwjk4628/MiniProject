@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.Reader;
 import java.io.Writer;
+import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.LinkedList;
@@ -87,9 +88,8 @@ public class MiniApp {
 				break;
 			case "4":
 
-				System.out.println("<4.필터>");
-				System.out.print("이름: ");
-				String name = sc.next();
+				
+				filter(list);
 				System.out.println("1.리스트 2.등록 3.삭제 4.검색 5.종료");
 				System.out.print(">메뉴번호: ");
 				i = sc.next();
@@ -115,9 +115,9 @@ public class MiniApp {
 		File file = new File(fileName);
 		String[] mySplit;
 		int i = 1;
-
+		Scanner sc = null;
 		try {
-			Scanner sc = new Scanner(file);
+			sc = new Scanner(file);
 			String hum;
 			while (sc.hasNext()) {
 				hum = sc.next();
@@ -129,6 +129,10 @@ public class MiniApp {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
+		} finally {
+			if (sc != null) {
+				sc.close();
+			}
 		}
 	}
 
@@ -177,11 +181,14 @@ public class MiniApp {
 	}
 
 	public static void filter(List<Mini> list) {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("<4.필터>");
+		System.out.print("이름: ");
+		String name = scanner.next();
 		for (Mini n : list) {
-			if (list.contains("길동")) {
-				System.out.println(n.toString());
+			if (n.getName().contains(name)) {
+				n.draw();
 			}
-			System.out.println(n.toString());
 		}
 
 	}

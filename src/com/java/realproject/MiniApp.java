@@ -164,7 +164,11 @@ public class MiniApp {
 
 		Scanner sc = new Scanner(System.in);
 		System.out.println("<3.삭제>");
+		if (!sc.hasNextInt()) {
+			return;
+		}
 		int line = sc.nextInt();
+		
 		if (line > list.size() || line <= 0) {
 			return;
 		}

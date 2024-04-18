@@ -1,18 +1,13 @@
 package com.java.realproject;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Reader;
 import java.io.Writer;
-import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -43,6 +38,7 @@ public class MiniApp {
 				rlist.add(hum);
 			}
 			console(rlist);
+			sc.close();
 
 		} catch (FileNotFoundException e) {
 			System.err.println("파일을 찾을 수 없습니다.");
@@ -155,6 +151,8 @@ public class MiniApp {
 				bw.write(n.toString());
 				bw.newLine();
 			}
+			bw.close();
+			scanner.close();
 		} catch (IOException e) {
 
 		}
@@ -165,11 +163,13 @@ public class MiniApp {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("<3.삭제>");
 		if (!sc.hasNextInt()) {
+			sc.close();
 			return;
 		}
 		int line = sc.nextInt();
 		
 		if (line > list.size() || line <= 0) {
+			sc.close();
 			return;
 		}
 //		if (line <= list.size() && line > 0) {
@@ -179,10 +179,12 @@ public class MiniApp {
 				bw.write(n.toString());
 				bw.newLine();
 			}
-
+			sc.close();
+			bw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} 
+		
 //		}
 
 	}
@@ -197,6 +199,7 @@ public class MiniApp {
 				n.draw();
 			}
 		}
+		scanner.close();
 
 	}
 }
